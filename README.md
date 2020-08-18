@@ -21,7 +21,7 @@
   
   
 **Use the OpenChargeMapViewModel as follows:**  
-Create an instance of the ViewModel OpenChargeMapViewModelFactory with a reference to your Android Application and  the number of days to expire/refresh the core data database data.  Database expiration/refresh will occur after 10 days by default.
+Create an instance of the ViewModel with the OpenChargeMapViewModelFactory, with a references to your Android Application and the number of days to expire/refresh the core data database data.  Database expiration/refresh will occur after 10 days by default.
 
      `openChargeMapViewModel = ViewModelProviders.of(this,OpenChargeMapViewModelFactory(application)).get(OpenChargeMapViewModel::class.java)`
 
