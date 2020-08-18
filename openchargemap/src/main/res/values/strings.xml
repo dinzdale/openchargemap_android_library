@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="api_key">4bfb6d9c-016b-487b-a1b6-08e478aba523</string>
+    <!-- OAuth -->
+    <string name="grant_type">client_credentials</string>
+    <string name="oauth_consumer_key">8cSW_c8HVh7HMN0ntTK_3A</string>
+    <string name="oauth_nonce">QHFGytwLzJI_X2pvhCj7eYtO92eS8UIAvXW1NYUN_nWUoOpOAHgC9Ycm6JnfolDjrWAbN4z2BgkbIgdsqEEfQg</string>
+    <string name="oauth_signature_method">HMAC-SHA256</string>
+    <string name="oauth_version">1.0</string>
+    <!-- Oauth Domains -->
+    <string name="schema">https://api.openchargemap.io</string>
+</resources>
+
