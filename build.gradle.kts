@@ -39,6 +39,8 @@ buildscript {
         classpath("org.jfrog.buildinfo:build-info-extractor-gradle:4.15.1")
         classpath("com.google.gms:google-services:4.3.3")
         classpath("com.google.firebase:firebase-crashlytics-gradle:2.1.0")
+        classpath ("com.github.dcendents:android-maven-gradle-plugin:2.1")
+
     }
 }
 
