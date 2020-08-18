@@ -1,4 +1,4 @@
-# openchargemap-android-library
+# openchargemap_android_library
 This library makes integrating OpenChargeMap.org (https://openchargemap.org/site) electric vehicle charging station POI's easy with your
 mapping application.
 
