@@ -14,7 +14,7 @@ persistant data. Database (model data) has a 10 day expiration date by default.
 
 openChargeMapViewModel = ViewModelProviders.of(this, OpenChargeMapViewModelFactory(application)).get(OpenChargeMapViewModel::class.java)
 
-2) Observer the ViewModel's dbInitialized property, which will indicated completion
+2) Observer the ViewModel's dbInitialized property, which will indicate completion
 of retreival and initialization of the database:
 
  fun setUpOpenChargeMapListeners() {
@@ -46,3 +46,25 @@ val openChargeMapPOIObserver = Observer<Optional<List<PoiItem>>> {
 4) Call the POI function when POI data is required:
 
  openChargeMapViewModel.getPOIs(newLocation.latitude, newLocation.longitude)
+
+5) To optionally render map markers from POI, a helper class is available:
+MapMarkers(context)
+where mapMarkers.getIconForPOI(poi) can be called to return a matching Bitmap for that POI
+to your map provider.
+
+Integration:
+Currently a SNAPSHOT of this library is available in JitPack.io.
+Documention: https://jitpack.io/#dinzdale/openchargemap_android_library/-SNAPSHOT
+
+1) gradle, root gradle.build
+allprojects {
+		repositories {
+			...
+			maven { url 'https://jitpack.io' }
+		}
+	}
+
+2) app gradle.build
+dependencies {
+	        implementation 'com.github.dinzdale:openchargemap_android_library:-SNAPSHOT'
+}
