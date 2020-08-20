@@ -1,7 +1,6 @@
 
 
 
-
 > Written with [StackEdit](https://stackedit.io/).
 >
 
@@ -91,6 +90,9 @@ app build.gradle
        implementation 'com.github.dinzdale:openchargemap_android_library:-SNAPSHOT'
     }
 
+
+release versions - obfuscating (minifying/shrinking), add the following to your proguard configuration file (ie proguard-custom-rules.pro)
+  -`keep public class com.gmjacobs.productions.openchargemap.** {*;}`
 
 **Some of the technologies leveraged to make this library possible are as follows:**
 
