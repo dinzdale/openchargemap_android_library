@@ -1,3 +1,2 @@
 include ':openchargemap'
-include ':app'
 rootProject.name = "openchargemap_android_lib"
