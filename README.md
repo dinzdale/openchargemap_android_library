@@ -91,8 +91,10 @@ app build.gradle
     }
 
 
-release versions - obfuscating (minifying/shrinking), add the following to your proguard configuration file (ie proguard-custom-rules.pro)
-  -`keep public class com.gmjacobs.productions.openchargemap.** {*;}`
+release versions - obfuscating  (minifying/shrinking), add the following to your proguard configuration file (ie proguard-custom-rules.pro)
+
+    -keep public class com.gmjacobs.productions.openchargemap.** {*;}
+
 
 **Some of the technologies leveraged to make this library possible are as follows:**
 
