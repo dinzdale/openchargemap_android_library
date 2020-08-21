@@ -34,13 +34,17 @@ class Api(val context: Context) {
     }
 
     @Throws(Exception::class)
-    suspend fun getPOIs(lat: Double, lon: Double, radiusMiles: Int, maxResults: Int): List<PoiItem> {
+    suspend fun getPOIs(
+        lat: Double, lon: Double, radiusMiles: Int,
+        countryIDs: List<Int>,
+        maxResults: Int
+    ): List<PoiItem> {
         val map = hashMapOf<String, String>(
             "key" to context.getString(R.string.api_key),
-            "countrycode" to "US",
             "latitude" to lat.roundUp(5).toString(),
             "longitude" to lon.roundUp(5).toString(),
             "distance" to radiusMiles.toString(),
+            "countryid" to countryIDs.commaSeperated(),
             "maxresults" to maxResults.toString()
         )
         return apiService.getPOIs(map)
@@ -52,6 +56,23 @@ class Api(val context: Context) {
         val decFormat = DecimalFormat(formatS)
         decFormat.roundingMode = RoundingMode.CEILING
         return decFormat.format(this).toDouble()
+    }
+
+    fun List<Int>.commaSeperated(): String {
+        return when {
+            size == 0 -> ""
+            size == 1 -> "${get(0)}"
+            else -> {
+                val sb = StringBuilder()
+                for (i in 0 until lastIndex) {
+                    sb.append("${get(i)},")
+                }
+                if (lastIndex > 0) {
+                    sb.append("${get(lastIndex)}")
+                }
+                sb.toString()
+            }
+        }
     }
 }
 

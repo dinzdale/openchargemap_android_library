@@ -116,9 +116,9 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) : An
         }
     }
 
-    fun getPOIs(lat: Double, lon: Double, radiusInMiles: Int = 100, maxResults: Int = 50) {
+    fun getPOIs(lat: Double, lon: Double, radiusInMiles: Int = 100, countryIDs: List<Int> = arrayListOf(2), maxResults: Int = 50) {
         viewModelScope.launch {
-            pois.postValue(Optional.of(repo.getPOIs(lat, lon, radiusInMiles, maxResults)))
+            pois.postValue(Optional.of(repo.getPOIs(lat, lon, radiusInMiles, countryIDs, maxResults)))
         }
     }
 

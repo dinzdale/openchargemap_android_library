@@ -19,7 +19,8 @@ class OpenChargeMapRepository(val applicationContext: Context) : CoroutineScope 
     private val tag = OpenChargeMapRepository::class.java.simpleName
 
     private val openChargeDB: OpenChargeMapDB by lazy {
-        Room.databaseBuilder(applicationContext, OpenChargeMapDB::class.java, "openchargemap.db").build()
+        Room.databaseBuilder(applicationContext, OpenChargeMapDB::class.java, "openchargemap.db")
+            .build()
     }
     private val api: Api by lazy {
         Api(applicationContext)
@@ -50,31 +51,36 @@ class OpenChargeMapRepository(val applicationContext: Context) : CoroutineScope 
             openChargeDB.operatorDao().deletTable()
             openChargeDB.operatorDao().insertOperators(types.operators)
             openChargeDB.submissionStatusTypeDao().deletTable()
-            openChargeDB.submissionStatusTypeDao().insertSubmissionStatusTypes(types.submissionStatusTypes)
+            openChargeDB.submissionStatusTypeDao()
+                .insertSubmissionStatusTypes(types.submissionStatusTypes)
             openChargeDB.usageTypeDao().deletTable()
             openChargeDB.usageTypeDao().insertUsageTypes(types.usageTypes)
-        }
-        else {
+        } else {
             Log.d(tag, "NOT, loading db")
         }
 
     }
 
     suspend fun loadOrRefreshDB(noDaysExpiration: Int): Boolean {
-        return if (openChargeDB.dbBuildTimeStampDao().tableExists() > 0 && openChargeDB.dbBuildTimeStampDao().rowsExist() > 0) {
+        return if (openChargeDB.dbBuildTimeStampDao()
+                .tableExists() > 0 && openChargeDB.dbBuildTimeStampDao().rowsExist() > 0
+        ) {
             // check for expired number of days
             val now = ZonedDateTime.now(ZoneId.of("UTC"))
-            val dbTimeStampInstant = Instant.ofEpochMilli(openChargeDB.dbBuildTimeStampDao().getBuildTimeStamp().timeStampDate.time)
+            val dbTimeStampInstant = Instant.ofEpochMilli(
+                openChargeDB.dbBuildTimeStampDao().getBuildTimeStamp().timeStampDate.time
+            )
             val dbTimeStampZonedTime = ZonedDateTime.ofInstant(dbTimeStampInstant, ZoneId.of("UTC"))
-            Log.d(tag, "loadOrRefreshDB days diff: ${Duration.between(dbTimeStampZonedTime, now).toDays()}")
+            Log.d(
+                tag,
+                "loadOrRefreshDB days diff: ${Duration.between(dbTimeStampZonedTime, now).toDays()}"
+            )
             if (Duration.between(dbTimeStampZonedTime, now).toDays() >= noDaysExpiration) {
                 true
-            }
-            else {
+            } else {
                 false
             }
-        }
-        else true
+        } else true
     }
 
 
@@ -87,9 +93,17 @@ class OpenChargeMapRepository(val applicationContext: Context) : CoroutineScope 
     suspend fun getStatusTypes() = openChargeDB.statusTypeDao().getStatusTypes()
     suspend fun getChargePoint() = openChargeDB.chargePointDao().getChargePoint()
     suspend fun getOperators() = openChargeDB.operatorDao().getOperators()
-    suspend fun getSubmissionStatusTypes() = openChargeDB.submissionStatusTypeDao().getSubmissionStatusTypes()
+    suspend fun getSubmissionStatusTypes() =
+        openChargeDB.submissionStatusTypeDao().getSubmissionStatusTypes()
+
     suspend fun getUsageTypes() = openChargeDB.usageTypeDao().getUsageTypes()
 
     // POIS
-    suspend fun getPOIs(lat: Double, lon: Double, radiusInMiles: Int, maxResults: Int) = api.getPOIs(lat, lon, radiusInMiles, maxResults)
+    suspend fun getPOIs(
+        lat: Double,
+        lon: Double,
+        radiusInMiles: Int,
+        countryIDs: List<Int>,
+        maxResults: Int
+    ) = api.getPOIs(lat, lon, radiusInMiles, countryIDs, maxResults)
 }
