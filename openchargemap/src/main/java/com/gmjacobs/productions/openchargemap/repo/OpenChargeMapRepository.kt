@@ -88,6 +88,7 @@ class OpenChargeMapRepository(val applicationContext: Context) : CoroutineScope 
     suspend fun getConnectionTypes() = openChargeDB.connectionTypeDao().getConnectionTypes()
     suspend fun getDataProviders() = openChargeDB.dataProviderDao().getDataProviders()
     suspend fun getCountries() = openChargeDB.countryDao().getCountries()
+    suspend fun getCountryByName(countryName: String) = openChargeDB.countryDao().getCountryByName(countryName)
     suspend fun getCurrentTypes() = openChargeDB.currentTypeDao().getCurrentTypes()
     suspend fun getCurrentType(id: Int) = openChargeDB.currentTypeDao().getCurrentType(id)
     suspend fun getStatusTypes() = openChargeDB.statusTypeDao().getStatusTypes()

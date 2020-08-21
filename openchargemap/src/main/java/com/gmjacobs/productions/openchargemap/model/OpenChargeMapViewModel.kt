@@ -80,6 +80,22 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) : An
         }
     }
 
+    fun getCountriesByName(vararg countryNames: String) {
+        viewModelScope.launch {
+            val countryList = arrayListOf<Country>()
+            countryNames.forEach {
+                repo.getCountryByName(it)?.let {
+                    countryList.add(it)
+                }
+            }
+            if (countryList.size > 0) {
+                countries.postValue(Optional.of(countryList))
+            } else {
+                countries.postValue(Optional.empty())
+            }
+        }
+    }
+
     fun getCurrenTypes() {
         viewModelScope.launch {
             currentTypes.postValue(Optional.of(repo.getCurrentTypes()))

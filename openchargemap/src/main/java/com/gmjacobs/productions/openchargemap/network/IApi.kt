@@ -8,7 +8,7 @@ interface IApi {
 
     // POI's
     @GET("/v3/poi/")
-    suspend fun getPOIs(@QueryMap queryMap: HashMap<String,String>) : List<PoiItem>
+    suspend fun getPOIs(@QueryMap(encoded = true) queryMap: HashMap<String,String>) : List<PoiItem>
 
     // Core Data
     @GET("/v3/referencedata")
