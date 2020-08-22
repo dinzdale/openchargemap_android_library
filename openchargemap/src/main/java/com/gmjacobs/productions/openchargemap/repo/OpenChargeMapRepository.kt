@@ -88,7 +88,9 @@ class OpenChargeMapRepository(val applicationContext: Context) : CoroutineScope 
     suspend fun getConnectionTypes() = openChargeDB.connectionTypeDao().getConnectionTypes()
     suspend fun getDataProviders() = openChargeDB.dataProviderDao().getDataProviders()
     suspend fun getCountries() = openChargeDB.countryDao().getCountries()
-    suspend fun getCountryByName(countryName: String) = openChargeDB.countryDao().getCountryByName(countryName)
+    suspend fun getCountryByName(countryName: String) =
+        openChargeDB.countryDao().getCountryByName(countryName)
+
     suspend fun getCurrentTypes() = openChargeDB.currentTypeDao().getCurrentTypes()
     suspend fun getCurrentType(id: Int) = openChargeDB.currentTypeDao().getCurrentType(id)
     suspend fun getStatusTypes() = openChargeDB.statusTypeDao().getStatusTypes()
@@ -105,6 +107,10 @@ class OpenChargeMapRepository(val applicationContext: Context) : CoroutineScope 
         lon: Double,
         radiusInMiles: Int,
         countryIDs: List<Int>,
-        maxResults: Int
-    ) = api.getPOIs(lat, lon, radiusInMiles, countryIDs, maxResults)
+        maxResults: Int,
+        compact: Boolean,
+        verbose: Boolean
+    ) = api.getPOIs(lat, lon, radiusInMiles, countryIDs, maxResults, compact, verbose)
+
+
 }

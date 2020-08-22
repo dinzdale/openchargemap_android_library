@@ -37,7 +37,9 @@ class Api(val context: Context) {
     suspend fun getPOIs(
         lat: Double, lon: Double, radiusMiles: Int,
         countryIDs: List<Int>,
-        maxResults: Int
+        maxResults: Int,
+        compact:Boolean,
+        verbose:Boolean
     ): List<PoiItem> {
         val map = hashMapOf<String, String>(
             "key" to context.getString(R.string.api_key),
@@ -45,7 +47,9 @@ class Api(val context: Context) {
             "longitude" to lon.roundUp(5).toString(),
             "distance" to radiusMiles.toString(),
             "countryid" to countryIDs.commaSeperated(),
-            "maxresults" to maxResults.toString()
+            "maxresults" to maxResults.toString(),
+            "compact" to compact.toString(),
+            "verbose" to verbose.toString()
         )
         return apiService.getPOIs(map)
     }

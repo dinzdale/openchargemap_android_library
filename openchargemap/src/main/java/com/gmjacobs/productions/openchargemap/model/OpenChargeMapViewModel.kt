@@ -8,14 +8,18 @@ import com.gmjacobs.productions.openchargemap.repo.OpenChargeMapRepository
 import kotlinx.coroutines.launch
 import java.util.*
 
-class OpenChargeMapViewModelFactory(val application: Application, val daysToExpireDB: Int = 10) : ViewModelProvider.AndroidViewModelFactory(application) {
+class OpenChargeMapViewModelFactory(val application: Application, val daysToExpireDB: Int = 10) :
+    ViewModelProvider.AndroidViewModelFactory(application) {
     override fun <T : ViewModel?> create(modelClass: Class<T>): T = modelClass.constructors.first {
-        it.parameterTypes.size == 2 && it.parameterTypes[0].name.compareTo(Application::class.java.name) == 0 && it.parameterTypes[1].name.compareTo("int") == 0
+        it.parameterTypes.size == 2 && it.parameterTypes[0].name.compareTo(Application::class.java.name) == 0 && it.parameterTypes[1].name.compareTo(
+            "int"
+        ) == 0
     }.newInstance(application, daysToExpireDB) as T
 
 }
 
-class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) : AndroidViewModel(application) {
+class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
+    AndroidViewModel(application) {
     var repo: OpenChargeMapRepository
     val dbIntialized = MutableLiveData<Boolean>()
     val pois = MutableLiveData<Optional<List<PoiItem>>>()
@@ -132,9 +136,29 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) : An
         }
     }
 
-    fun getPOIs(lat: Double, lon: Double, radiusInMiles: Int = 100, countryIDs: List<Int> = arrayListOf(2), maxResults: Int = 50) {
+    fun getPOIs(
+        lat: Double,
+        lon: Double,
+        radiusInMiles: Int = 100,
+        countryIDs: List<Int> = arrayListOf(2),
+        maxResults: Int = 50,
+        compact: Boolean = false,
+        verbose: Boolean = true
+    ) {
         viewModelScope.launch {
-            pois.postValue(Optional.of(repo.getPOIs(lat, lon, radiusInMiles, countryIDs, maxResults)))
+            pois.postValue(
+                Optional.of(
+                    repo.getPOIs(
+                        lat,
+                        lon,
+                        radiusInMiles,
+                        countryIDs,
+                        maxResults,
+                        compact,
+                        verbose
+                    )
+                )
+            )
         }
     }
 
