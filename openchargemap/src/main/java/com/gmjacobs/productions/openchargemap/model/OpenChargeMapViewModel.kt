@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.gmjacobs.productions.openchargemap.model.core.*
 import com.gmjacobs.productions.openchargemap.model.poi.PoiItem
+import com.gmjacobs.productions.openchargemap.network.Api
 import com.gmjacobs.productions.openchargemap.repo.OpenChargeMapRepository
 import kotlinx.coroutines.launch
 import java.util.*
@@ -141,6 +142,7 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
         lon: Double,
         radiusInMiles: Int = 100,
         countryIDs: List<Int> = arrayListOf(2),
+        distanceUnit: Api.DistanceUnit = Api.DistanceUnit.MILES,
         maxResults: Int = 50,
         compact: Boolean = false,
         verbose: Boolean = true
@@ -153,6 +155,7 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
                         lon,
                         radiusInMiles,
                         countryIDs,
+                        distanceUnit,
                         maxResults,
                         compact,
                         verbose

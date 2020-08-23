@@ -107,10 +107,11 @@ class OpenChargeMapRepository(val applicationContext: Context) : CoroutineScope 
         lon: Double,
         radiusInMiles: Int,
         countryIDs: List<Int>,
+        distanceUnits: Api.DistanceUnit,
         maxResults: Int,
         compact: Boolean,
         verbose: Boolean
-    ) = api.getPOIs(lat, lon, radiusInMiles, countryIDs, maxResults, compact, verbose)
+    ) = api.getPOIs(lat, lon, radiusInMiles, countryIDs, distanceUnits, maxResults, compact, verbose)
 
 
 }

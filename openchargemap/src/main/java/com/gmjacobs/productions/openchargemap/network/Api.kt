@@ -29,6 +29,12 @@ class Api(val context: Context) {
         "X-API-Key" to context.getString(R.string.api_key)
     )
 
+     enum class DistanceUnit(val unitS:String) {
+         MILES("Miles"),
+         KILOS("KM")
+     }
+
+
     @Throws(Exception::class)
     suspend fun getCoreData(): Types {
         return apiService.getCoreData(headerMap)
@@ -38,6 +44,7 @@ class Api(val context: Context) {
     suspend fun getPOIs(
         lat: Double, lon: Double, radiusMiles: Int,
         countryIDs: List<Int>,
+        units:DistanceUnit,
         maxResults: Int,
         compact: Boolean,
         verbose: Boolean
@@ -47,6 +54,7 @@ class Api(val context: Context) {
             "longitude" to lon.roundUp(5).toString(),
             "distance" to radiusMiles.toString(),
             "countryid" to countryIDs.commaSeperated(),
+            "distanceUnit" to  units.unitS,
             "maxresults" to maxResults.toString(),
             "compact" to compact.toString(),
             "verbose" to verbose.toString()
