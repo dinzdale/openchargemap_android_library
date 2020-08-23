@@ -21,16 +21,17 @@ class Api(val context: Context) {
         loggingInterceptor.level = HttpLoggingInterceptor.Level.HEADERS
         OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
     }
-    private val retrofit: Retrofit = Retrofit.Builder().baseUrl(domain).client(client).addConverterFactory(GsonConverterFactory.create()).build()
+    private val retrofit: Retrofit = Retrofit.Builder().baseUrl(domain).client(client)
+        .addConverterFactory(GsonConverterFactory.create()).build()
     private val apiService: IApi = retrofit.create(IApi::class.java)
-
+    private val headerMap = hashMapOf<String, String>(
+        "User-Agent" to context.applicationInfo.packageName,
+        "X-API-Key" to context.getString(R.string.api_key)
+    )
 
     @Throws(Exception::class)
     suspend fun getCoreData(): Types {
-        val map = hashMapOf<String, String>(
-            "key" to context.getString(R.string.api_key)
-        )
-        return apiService.getCoreData(map)
+        return apiService.getCoreData(headerMap)
     }
 
     @Throws(Exception::class)
@@ -38,11 +39,10 @@ class Api(val context: Context) {
         lat: Double, lon: Double, radiusMiles: Int,
         countryIDs: List<Int>,
         maxResults: Int,
-        compact:Boolean,
-        verbose:Boolean
+        compact: Boolean,
+        verbose: Boolean
     ): List<PoiItem> {
-        val map = hashMapOf<String, String>(
-            "key" to context.getString(R.string.api_key),
+        val queryMap = hashMapOf<String, String>(
             "latitude" to lat.roundUp(5).toString(),
             "longitude" to lon.roundUp(5).toString(),
             "distance" to radiusMiles.toString(),
@@ -51,7 +51,7 @@ class Api(val context: Context) {
             "compact" to compact.toString(),
             "verbose" to verbose.toString()
         )
-        return apiService.getPOIs(map)
+        return apiService.getPOIs(headerMap, queryMap)
     }
 
     // Round up lat, lon to minimal number of places for api call
