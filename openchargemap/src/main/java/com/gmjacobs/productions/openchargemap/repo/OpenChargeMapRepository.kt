@@ -96,6 +96,7 @@ class OpenChargeMapRepository(val applicationContext: Context) : CoroutineScope 
     suspend fun getStatusTypes() = openChargeDB.statusTypeDao().getStatusTypes()
     suspend fun getChargePoint() = openChargeDB.chargePointDao().getChargePoint()
     suspend fun getOperators() = openChargeDB.operatorDao().getOperators()
+    suspend fun getOperatorByName(name: String) = openChargeDB.operatorDao().getOperatorByName(name)
     suspend fun getSubmissionStatusTypes() =
         openChargeDB.submissionStatusTypeDao().getSubmissionStatusTypes()
 
@@ -111,7 +112,16 @@ class OpenChargeMapRepository(val applicationContext: Context) : CoroutineScope 
         maxResults: Int,
         compact: Boolean,
         verbose: Boolean
-    ) = api.getPOIs(lat, lon, radiusInMiles, countryIDs, distanceUnits, maxResults, compact, verbose)
+    ) = api.getPOIs(
+        lat,
+        lon,
+        radiusInMiles,
+        countryIDs,
+        distanceUnits,
+        maxResults,
+        compact,
+        verbose
+    )
 
 
 }

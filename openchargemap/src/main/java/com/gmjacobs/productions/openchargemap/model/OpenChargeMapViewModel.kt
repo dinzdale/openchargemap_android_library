@@ -85,6 +85,23 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
         }
     }
 
+    fun getOperatorsByName(vararg operatorNames: String) {
+        viewModelScope.launch {
+            val operatorList = arrayListOf<Operator>()
+            operatorNames.forEach {
+                repo.getOperatorByName(it)?.let{
+                    operatorList.add(it)
+                }
+            }
+            if (operatorList.size > 0) {
+                operators.postValue(Optional.of(operatorList))
+            }
+            else {
+                operators.postValue(Optional.empty())
+            }
+        }
+    }
+
     fun getCountriesByName(vararg countryNames: String) {
         viewModelScope.launch {
             val countryList = arrayListOf<Country>()
@@ -100,6 +117,7 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
             }
         }
     }
+
 
     fun getCurrenTypes() {
         viewModelScope.launch {

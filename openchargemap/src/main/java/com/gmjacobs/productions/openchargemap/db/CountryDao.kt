@@ -20,6 +20,6 @@ interface CountryDao {
     @Query("Select * from country")
     suspend fun getCountries(): List<Country>
 
-    @Query("Select * from country where title like :name")
-    suspend fun getCountryByName(name:String) : Country?
+    @Query("Select * from country where title like '%'||:name ||'%'")
+    suspend fun getCountryByName(name: String): Country?
 }
