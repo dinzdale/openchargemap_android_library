@@ -44,6 +44,7 @@ class Api(val context: Context) {
     suspend fun getPOIs(
         lat: Double, lon: Double, radiusMiles: Int,
         countryIDs: List<Int>,
+        operatorIDs: List<Int>,
         units:DistanceUnit,
         maxResults: Int,
         compact: Boolean,
@@ -54,6 +55,7 @@ class Api(val context: Context) {
             "longitude" to lon.roundUp(5).toString(),
             "distance" to radiusMiles.toString(),
             "countryid" to countryIDs.commaSeperated(),
+            "operatorid" to operatorIDs.commaSeperated(),
             "distanceUnit" to  units.unitS,
             "maxresults" to maxResults.toString(),
             "compact" to compact.toString(),
