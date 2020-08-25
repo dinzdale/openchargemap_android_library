@@ -2,6 +2,7 @@ package com.gmjacobs.productions.openchargemap.model
 
 import android.app.Application
 import androidx.lifecycle.*
+import androidx.lifecycle.Observer
 import com.gmjacobs.productions.openchargemap.model.core.*
 import com.gmjacobs.productions.openchargemap.model.poi.PoiItem
 import com.gmjacobs.productions.openchargemap.network.Api
@@ -23,6 +24,7 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
     AndroidViewModel(application) {
     var repo: OpenChargeMapRepository
     val dbIntialized = MutableLiveData<Boolean>()
+    val paramsFetched = MediatorLiveData<Boolean>()
     val pois = MutableLiveData<Optional<List<PoiItem>>>()
     val chargeTypes = MutableLiveData<Optional<List<ChargerType>>>()
     val connectionTypes = MutableLiveData<Optional<List<ConnectionType>>>()
@@ -34,6 +36,8 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
     val operators = MutableLiveData<Optional<List<Operator>>>()
     val submissionStatusTypes = MutableLiveData<Optional<List<SubmissionStatusType>>>()
     val usageTypes = MutableLiveData<Optional<List<UsageType>>>()
+
+    private var paramsFetchedCnt = 0
 
     init {
         repo = OpenChargeMapRepository(application)
@@ -89,14 +93,13 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
         viewModelScope.launch {
             val operatorList = arrayListOf<Operator>()
             operatorNames.forEach {
-                repo.getOperatorByName(it)?.let{
+                repo.getOperatorByName(it)?.let {
                     operatorList.add(it)
                 }
             }
             if (operatorList.size > 0) {
                 operators.postValue(Optional.of(operatorList))
-            }
-            else {
+            } else {
                 operators.postValue(Optional.empty())
             }
         }
@@ -153,6 +156,21 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
         viewModelScope.launch {
             usageTypes.postValue(Optional.of(repo.getUsageTypes()))
         }
+    }
+
+    fun waitForParamData(vararg liveDataList: LiveData<Optional<Any>>) {
+        liveDataList.forEach { nxtLiveData ->
+            paramsFetched.addSource(nxtLiveData, Observer {
+                it.ifPresent {
+                    paramsFetched.removeSource(nxtLiveData)
+                    if (--paramsFetchedCnt == 0) {
+                        paramsFetched.postValue(true)
+                    }
+                }
+            })
+            paramsFetchedCnt++
+        }
+
     }
 
     fun getPOIs(
