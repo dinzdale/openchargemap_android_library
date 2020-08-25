@@ -1,7 +1,6 @@
 package com.gmjacobs.productions.openchargemap.db
 
 import androidx.room.*
-import com.gmjacobs.productions.openchargemap.model.core.StatusType
 import com.gmjacobs.productions.openchargemap.model.core.UsageType
 
 @Dao
@@ -20,4 +19,7 @@ interface UsageTypeDao {
 
     @Query("Select * from usage_type")
     suspend fun getUsageTypes(): List<UsageType>
+
+    @Query("select * from usage_type where title like '%'||:name||'%'")
+    suspend fun getUsageTypesByName(name: String): List<UsageType>?
 }

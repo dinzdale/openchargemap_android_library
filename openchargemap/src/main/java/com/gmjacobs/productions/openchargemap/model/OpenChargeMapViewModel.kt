@@ -77,6 +77,22 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
         }
     }
 
+    fun getConnectionTypesByName(vararg connectionTypeNames: String) {
+        viewModelScope.launch {
+            val connectionTypesList = arrayListOf<ConnectionType>()
+            connectionTypeNames.forEach {
+                repo.getConnectionTypeByName(it)?.let {
+                    connectionTypesList.add(it)
+                }
+            }
+            if (connectionTypesList.size > 0) {
+                connectionTypes.postValue(Optional.of(connectionTypesList))
+            } else {
+                connectionTypes.postValue(Optional.empty())
+            }
+        }
+    }
+
     fun getDataProviders() {
         viewModelScope.launch {
             dataProviders.postValue(Optional.of(repo.getDataProviders()))
@@ -128,9 +144,46 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
         }
     }
 
+
+    fun getUsageTypesByName(vararg usageTypeNames: String) {
+        viewModelScope.launch {
+            val usageTypeList = arrayListOf<UsageType>()
+            usageTypeNames.forEach {
+                repo.getUsageTypesByName(it)?.let {
+                    it.forEach {
+                        usageTypeList.add(it)
+                    }
+                }
+            }
+            if (usageTypeList.size > 0) {
+                usageTypes.postValue(Optional.of(usageTypeList))
+            } else {
+                usageTypes.postValue(Optional.empty())
+            }
+        }
+    }
+
     fun getStatusTypes() {
         viewModelScope.launch {
             statusTypes.postValue(Optional.of(repo.getStatusTypes()))
+        }
+    }
+
+    fun getStatusTypesByName(vararg statusTypeNames: String) {
+        viewModelScope.launch {
+            val statusTypeList = arrayListOf<StatusType>()
+            statusTypeNames.forEach {
+                repo.getStatusTypesByName(it)?.let {
+                    it.forEach {
+                        statusTypeList.add(it)
+                    }
+                }
+            }
+            if (statusTypeList.size > 0) {
+                statusTypes.postValue(Optional.of(statusTypeList))
+            } else {
+                statusTypes.postValue(Optional.empty())
+            }
         }
     }
 
@@ -179,6 +232,9 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
         radiusInMiles: Int = 100,
         countryIDs: List<Int> = arrayListOf(2),
         operatorIDs: List<Int>,
+        connectionTypeIDs: List<Int>,
+        usageTypeIDs: List<Int>,
+        statusTypeIDs: List<Int>,
         distanceUnit: Api.DistanceUnit = Api.DistanceUnit.MILES,
         maxResults: Int = 50,
         compact: Boolean = false,
@@ -193,6 +249,9 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
                         radiusInMiles,
                         countryIDs,
                         operatorIDs,
+                        connectionTypeIDs,
+                        usageTypeIDs,
+                        statusTypeIDs,
                         distanceUnit,
                         maxResults,
                         compact,

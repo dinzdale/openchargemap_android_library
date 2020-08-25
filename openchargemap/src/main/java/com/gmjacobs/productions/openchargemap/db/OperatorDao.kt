@@ -22,5 +22,5 @@ interface OperatorDao {
     suspend fun getOperators(): List<Operator>
 
     @Query("SELECT * FROM operator WHERE title LIKE '%' || :name || '%'")
-    suspend fun getOperatorByName(name: String) : Operator
+    suspend fun getOperatorByName(name: String) : Operator?
 }

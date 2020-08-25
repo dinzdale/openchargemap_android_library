@@ -86,6 +86,9 @@ class OpenChargeMapRepository(val applicationContext: Context) : CoroutineScope 
 
     suspend fun getChargeTypes() = openChargeDB.chargerTypeDao().getChargerTypes()
     suspend fun getConnectionTypes() = openChargeDB.connectionTypeDao().getConnectionTypes()
+    suspend fun getConnectionTypeByName(name: String) =
+        openChargeDB.connectionTypeDao().getConnectionTypeByName(name)
+
     suspend fun getDataProviders() = openChargeDB.dataProviderDao().getDataProviders()
     suspend fun getCountries() = openChargeDB.countryDao().getCountries()
     suspend fun getCountryByName(countryName: String) =
@@ -94,6 +97,9 @@ class OpenChargeMapRepository(val applicationContext: Context) : CoroutineScope 
     suspend fun getCurrentTypes() = openChargeDB.currentTypeDao().getCurrentTypes()
     suspend fun getCurrentType(id: Int) = openChargeDB.currentTypeDao().getCurrentType(id)
     suspend fun getStatusTypes() = openChargeDB.statusTypeDao().getStatusTypes()
+    suspend fun getStatusTypesByName(statusTypeName: String) =
+        openChargeDB.statusTypeDao().getStatusTypesByName(statusTypeName)
+
     suspend fun getChargePoint() = openChargeDB.chargePointDao().getChargePoint()
     suspend fun getOperators() = openChargeDB.operatorDao().getOperators()
     suspend fun getOperatorByName(name: String) = openChargeDB.operatorDao().getOperatorByName(name)
@@ -101,6 +107,8 @@ class OpenChargeMapRepository(val applicationContext: Context) : CoroutineScope 
         openChargeDB.submissionStatusTypeDao().getSubmissionStatusTypes()
 
     suspend fun getUsageTypes() = openChargeDB.usageTypeDao().getUsageTypes()
+    suspend fun getUsageTypesByName(usageTypeName: String) =
+        openChargeDB.usageTypeDao().getUsageTypesByName(usageTypeName)
 
     // POIS
     suspend fun getPOIs(
@@ -109,6 +117,9 @@ class OpenChargeMapRepository(val applicationContext: Context) : CoroutineScope 
         radiusInMiles: Int,
         countryIDs: List<Int>,
         operatorIDs: List<Int>,
+        connectionTypeIDs: List<Int>,
+        usageTypeIDs: List<Int>,
+        statusTypeIDs: List<Int>,
         distanceUnits: Api.DistanceUnit,
         maxResults: Int,
         compact: Boolean,
@@ -119,6 +130,9 @@ class OpenChargeMapRepository(val applicationContext: Context) : CoroutineScope 
         radiusInMiles,
         countryIDs,
         operatorIDs,
+        connectionTypeIDs,
+        usageTypeIDs,
+        statusTypeIDs,
         distanceUnits,
         maxResults,
         compact,

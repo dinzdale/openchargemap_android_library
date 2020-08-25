@@ -6,7 +6,7 @@ import com.gmjacobs.productions.openchargemap.model.core.ChargerType
 @Dao
 interface ChargerTypeDao {
 
-    @Query("delete from charger_type" )
+    @Query("delete from charger_type")
     suspend fun deletTable()
 
     @Insert
@@ -20,4 +20,7 @@ interface ChargerTypeDao {
 
     @Query("Select * from charger_type")
     suspend fun getChargerTypes(): List<ChargerType>
+
+    @Query("select * from charger_type where title like '%'||:name||'%'")
+    suspend fun getChargerTypeByName(name: String): ChargerType?
 }

@@ -19,4 +19,7 @@ interface StatusTypeDao {
 
     @Query("Select * from status_type")
     suspend fun getStatusTypes(): List<StatusType>
+
+    @Query("select * from status_type where title like '%'||:name||'%'")
+    suspend fun getStatusTypesByName(name: String): List<StatusType>
 }

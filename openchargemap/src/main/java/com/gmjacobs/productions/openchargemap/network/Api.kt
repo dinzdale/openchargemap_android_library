@@ -29,10 +29,10 @@ class Api(val context: Context) {
         "X-API-Key" to context.getString(R.string.api_key)
     )
 
-     enum class DistanceUnit(val unitS:String) {
-         MILES("Miles"),
-         KILOS("KM")
-     }
+    enum class DistanceUnit(val unitS: String) {
+        MILES("Miles"),
+        KILOS("KM")
+    }
 
 
     @Throws(Exception::class)
@@ -45,7 +45,10 @@ class Api(val context: Context) {
         lat: Double, lon: Double, radiusMiles: Int,
         countryIDs: List<Int>,
         operatorIDs: List<Int>,
-        units:DistanceUnit,
+        connectionTypeIDs: List<Int>,
+        usageTypeIDs: List<Int>,
+        statusTypeIDs: List<Int>,
+        units: DistanceUnit,
         maxResults: Int,
         compact: Boolean,
         verbose: Boolean
@@ -56,7 +59,10 @@ class Api(val context: Context) {
             "distance" to radiusMiles.toString(),
             "countryid" to countryIDs.commaSeperated(),
             "operatorid" to operatorIDs.commaSeperated(),
-            "distanceUnit" to  units.unitS,
+            "connectiontypeid" to connectionTypeIDs.commaSeperated(),
+            "usagetypeid" to usageTypeIDs.commaSeperated(),
+            "statustypeid" to statusTypeIDs.commaSeperated(),
+            "distanceUnit" to units.unitS,
             "maxresults" to maxResults.toString(),
             "compact" to compact.toString(),
             "verbose" to verbose.toString()
