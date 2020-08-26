@@ -21,10 +21,10 @@
 
 
 ## Architecure
-OCM reference data is persisted in an sqlite3 database and is retrieved and populated via the OCM "reference" api. Reference data expires and refreshes the database every 10 days, but can be overridden by the application if required.
-Charging station POI's, containing detailed information about each charging stations, are retrieved using the OCM "poi" api and specifying the desired location coordinates.
+OCM reference data is persisted in an sqlite3 database and is retrieved and populated via the OCM "reference" api. Reference data expires and refreshes the database every 10 days, but can be overridden by the application.
+Charging station POI's, containing detailed information about each charging station, are retrieved using the OCM "poi" api and specifies the desired location coordinates.
 
-An **OpenChargeMapViewModel** ViewModel is made available to the application to act as the sole component for retrieving OCM reference data and making poi queries. Database management and api calls are all handled by the library, but can also be access by the application if required.
+An **OpenChargeMapViewModel** ViewModel is made available to the application to act as the sole component for retrieving OCM reference data and making poi queries. Database management and api calls are all handled by the library, but can also be accesed by the application if required.
 Reference data for the application session can be filtered as needed and stored for the session in the OpenChargeMapViewModel.
 
 **OpenChargeMapViewModel usage:**
