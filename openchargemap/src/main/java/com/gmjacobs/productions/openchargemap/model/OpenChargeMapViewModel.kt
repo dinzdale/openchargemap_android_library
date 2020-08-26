@@ -91,6 +91,7 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
                 connectionTypes.postValue(Optional.empty())
             }
         }
+        waitForParamData(connectionTypes as LiveData<Optional<Any>>)
     }
 
     fun getDataProviders() {
@@ -119,6 +120,7 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
                 operators.postValue(Optional.empty())
             }
         }
+        waitForParamData(operators as LiveData<Optional<Any>>)
     }
 
     fun getCountriesByName(vararg countryNames: String) {
@@ -135,6 +137,7 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
                 countries.postValue(Optional.empty())
             }
         }
+        waitForParamData(countries as LiveData<Optional<Any>>)
     }
 
 
@@ -161,6 +164,7 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
                 usageTypes.postValue(Optional.empty())
             }
         }
+        waitForParamData(usageTypes as LiveData<Optional<Any>>)
     }
 
     fun getStatusTypes() {
@@ -185,6 +189,7 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
                 statusTypes.postValue(Optional.empty())
             }
         }
+        waitForParamData(statusTypes as LiveData<Optional<Any>>)
     }
 
     fun getChargePoint() {
@@ -211,7 +216,7 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
         }
     }
 
-    fun waitForParamData(vararg liveDataList: LiveData<Optional<Any>>) {
+    private fun waitForParamData(vararg liveDataList: LiveData<Optional<Any>>) {
         liveDataList.forEach { nxtLiveData ->
             paramsFetched.addSource(nxtLiveData, Observer {
                 it.ifPresent {
