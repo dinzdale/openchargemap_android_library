@@ -43,11 +43,11 @@ class Api(val context: Context) {
     @Throws(Exception::class)
     suspend fun getPOIs(
         lat: Double, lon: Double, radiusMiles: Int,
-        countryIDs: List<Int>,
-        operatorIDs: List<Int>,
-        connectionTypeIDs: List<Int>,
-        usageTypeIDs: List<Int>,
-        statusTypeIDs: List<Int>,
+        countryIDs: List<Int>? = null,
+        operatorIDs: List<Int>? = null,
+        connectionTypeIDs: List<Int>? = null,
+        usageTypeIDs: List<Int>? = null,
+        statusTypeIDs: List<Int>? = null,
         units: DistanceUnit,
         maxResults: Int,
         compact: Boolean,
@@ -57,16 +57,26 @@ class Api(val context: Context) {
             "latitude" to lat.roundUp(5).toString(),
             "longitude" to lon.roundUp(5).toString(),
             "distance" to radiusMiles.toString(),
-            "countryid" to countryIDs.commaSeperated(),
-            "operatorid" to operatorIDs.commaSeperated(),
-            "connectiontypeid" to connectionTypeIDs.commaSeperated(),
-            "usagetypeid" to usageTypeIDs.commaSeperated(),
-            "statustypeid" to statusTypeIDs.commaSeperated(),
             "distanceUnit" to units.unitS,
             "maxresults" to maxResults.toString(),
             "compact" to compact.toString(),
             "verbose" to verbose.toString()
         )
+        countryIDs?.let {
+            queryMap.put("countryid", it.commaSeperated())
+        }
+        operatorIDs?.let {
+            queryMap.put("operatorid", it.commaSeperated())
+        }
+        usageTypeIDs?.let {
+            queryMap.put("usagetypeid", it.commaSeperated())
+        }
+        statusTypeIDs?.let {
+            queryMap.put("statustypeid", it.commaSeperated())
+        }
+        connectionTypeIDs?.let {
+            queryMap.put("connectiontypeid", it.commaSeperated())
+        }
         return apiService.getPOIs(headerMap, queryMap)
     }
 

@@ -8,7 +8,6 @@ import com.gmjacobs.productions.openchargemap.model.poi.PoiItem
 import com.gmjacobs.productions.openchargemap.network.Api
 import com.gmjacobs.productions.openchargemap.repo.OpenChargeMapRepository
 import kotlinx.coroutines.launch
-import java.lang.IllegalArgumentException
 import java.util.*
 
 class OpenChargeMapViewModelFactory(val application: Application, val daysToExpireDB: Int = 10) :
@@ -97,6 +96,18 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
         waitForParamData(connectionTypes as LiveData<Optional<Any>>)
     }
 
+    fun getConnectionTypeIDs(): List<Int>? {
+        var idList: List<Int>? = null
+        connectionTypes.value?.ifPresent {
+            if (it.size > 0) {
+                idList = it.map {
+                    it.iD
+                }
+            }
+        }
+        return idList
+    }
+
     fun getDataProviders() {
         viewModelScope.launch {
             dataProviders.postValue(Optional.of(repo.getDataProviders()))
@@ -109,6 +120,18 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
             countries.postValue(Optional.of(repo.getCountries()))
         }
         waitForParamData(countries as LiveData<Optional<Any>>)
+    }
+
+    fun getCountryIDs(): List<Int>? {
+        var idList: List<Int>? = null
+        countries.value?.ifPresent {
+            if (it.size > 0) {
+                idList = it.map {
+                    it.iD
+                }
+            }
+        }
+        return idList
     }
 
     fun getOperatorsByName(vararg operatorNames: String) {
@@ -126,6 +149,18 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
             }
         }
         waitForParamData(operators as LiveData<Optional<Any>>)
+    }
+
+    fun getOperatorIDs(): List<Int>? {
+        var idList: List<Int>? = null
+        operators.value?.ifPresent {
+            if (it.size > 0) {
+                idList = it.map {
+                    it.iD
+                }
+            }
+        }
+        return idList
     }
 
     fun getCountriesByName(vararg countryNames: String) {
@@ -171,6 +206,30 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
             }
         }
         waitForParamData(usageTypes as LiveData<Optional<Any>>)
+    }
+
+    fun getUsageTypeIDs(): List<Int>? {
+        var idList: List<Int>? = null
+        usageTypes.value?.ifPresent {
+            if (it.size > 0) {
+                idList = it.map {
+                    it.iD
+                }
+            }
+        }
+        return idList
+    }
+
+    fun getStatusTypeIDs(): List<Int>? {
+        var idList: List<Int>? = null
+        statusTypes.value?.ifPresent {
+            if (it.size > 0) {
+                idList = it.map {
+                    it.iD
+                }
+            }
+        }
+        return idList
     }
 
     fun getStatusTypes() {
@@ -248,11 +307,11 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
         lat: Double,
         lon: Double,
         radiusInMiles: Int = 100,
-        countryIDs: List<Int> = arrayListOf(2),
-        operatorIDs: List<Int>,
-        connectionTypeIDs: List<Int>,
-        usageTypeIDs: List<Int>,
-        statusTypeIDs: List<Int>,
+        countryIDs: List<Int>? = null,
+        operatorIDs: List<Int>? = null,
+        connectionTypeIDs: List<Int>? = null,
+        usageTypeIDs: List<Int>? = null,
+        statusTypeIDs: List<Int>? = null,
         distanceUnit: Api.DistanceUnit = Api.DistanceUnit.MILES,
         maxResults: Int = 50,
         compact: Boolean = false,
