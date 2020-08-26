@@ -8,6 +8,7 @@ import com.gmjacobs.productions.openchargemap.model.poi.PoiItem
 import com.gmjacobs.productions.openchargemap.network.Api
 import com.gmjacobs.productions.openchargemap.repo.OpenChargeMapRepository
 import kotlinx.coroutines.launch
+import java.lang.IllegalArgumentException
 import java.util.*
 
 class OpenChargeMapViewModelFactory(val application: Application, val daysToExpireDB: Int = 10) :
@@ -69,12 +70,14 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
         viewModelScope.launch {
             chargeTypes.postValue(Optional.of(repo.getChargeTypes()))
         }
+        waitForParamData(chargeTypes as LiveData<Optional<Any>>)
     }
 
     fun getConnectionTypes() {
         viewModelScope.launch {
             connectionTypes.postValue(Optional.of(repo.getConnectionTypes()))
         }
+        waitForParamData(connectionTypes as LiveData<Optional<Any>>)
     }
 
     fun getConnectionTypesByName(vararg connectionTypeNames: String) {
@@ -98,12 +101,14 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
         viewModelScope.launch {
             dataProviders.postValue(Optional.of(repo.getDataProviders()))
         }
+        waitForParamData(dataProviders as LiveData<Optional<Any>>)
     }
 
     fun getCountries() {
         viewModelScope.launch {
             countries.postValue(Optional.of(repo.getCountries()))
         }
+        waitForParamData(countries as LiveData<Optional<Any>>)
     }
 
     fun getOperatorsByName(vararg operatorNames: String) {
@@ -145,6 +150,7 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
         viewModelScope.launch {
             currentTypes.postValue(Optional.of(repo.getCurrentTypes()))
         }
+        waitForParamData(currentTypes as LiveData<Optional<Any>>)
     }
 
 
@@ -171,6 +177,7 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
         viewModelScope.launch {
             statusTypes.postValue(Optional.of(repo.getStatusTypes()))
         }
+        waitForParamData(statusTypes as LiveData<Optional<Any>>)
     }
 
     fun getStatusTypesByName(vararg statusTypeNames: String) {
@@ -196,25 +203,32 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
         viewModelScope.launch {
             chargePoint.postValue(Optional.of(repo.getChargePoint()))
         }
+        waitForParamData(chargePoint as LiveData<Optional<Any>>)
     }
 
     fun getOperators() {
         viewModelScope.launch {
             operators.postValue(Optional.of(repo.getOperators()))
         }
+        waitForParamData(operators as LiveData<Optional<Any>>)
     }
 
     fun getSubmissionStatusTypes() {
         viewModelScope.launch {
             submissionStatusTypes.postValue(Optional.of(repo.getSubmissionStatusTypes()))
         }
+        waitForParamData(submissionStatusTypes as LiveData<Optional<Any>>)
+
     }
 
     fun getUsageTypes() {
         viewModelScope.launch {
             usageTypes.postValue(Optional.of(repo.getUsageTypes()))
         }
+        waitForParamData(usageTypes as LiveData<Optional<Any>>)
+
     }
+
 
     private fun waitForParamData(vararg liveDataList: LiveData<Optional<Any>>) {
         liveDataList.forEach { nxtLiveData ->
@@ -228,7 +242,6 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
             })
             paramsFetchedCnt++
         }
-
     }
 
     fun getPOIs(
