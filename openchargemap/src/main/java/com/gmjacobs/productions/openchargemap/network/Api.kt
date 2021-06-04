@@ -1,6 +1,7 @@
 package com.gmjacobs.productions.openchargemap.network
 
 import android.content.Context
+import android.util.Log
 import com.gmjacobs.productions.openchargemap.R
 import com.gmjacobs.productions.openchargemap.model.core.Types
 import com.gmjacobs.productions.openchargemap.model.poi.PoiItem
@@ -41,6 +42,7 @@ class Api(val context: Context) {
             return apiService.getCoreData(headerMap)
         }
         catch(ex:Exception) {
+            Log.d(tag,"getCoreDataq exception ${ex.message}",ex)
             null
         }
     }
@@ -85,7 +87,8 @@ class Api(val context: Context) {
         return try {
             apiService.getPOIs(headerMap, queryMap)
         }
-        catch(ex:Exception) {
+        catch(ex:java.lang.Exception) {
+            Log.d(tag,"getPOIs exception ${ex.message}",ex)
             null
         }
     }
