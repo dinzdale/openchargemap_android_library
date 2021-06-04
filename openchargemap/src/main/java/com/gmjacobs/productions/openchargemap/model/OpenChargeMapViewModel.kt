@@ -319,7 +319,6 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
     ) {
         viewModelScope.launch {
             pois.postValue(
-                Optional.of(
                     repo.getPOIs(
                         lat,
                         lon,
@@ -333,8 +332,9 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
                         maxResults,
                         compact,
                         verbose
-                    )
-                )
+                    )?.let{
+                        Optional.of(it)
+                    }?: Optional.empty()
             )
         }
     }

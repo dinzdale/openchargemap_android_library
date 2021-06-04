@@ -36,8 +36,13 @@ class Api(val context: Context) {
 
 
     @Throws(Exception::class)
-    suspend fun getCoreData(): Types {
-        return apiService.getCoreData(headerMap)
+    suspend fun getCoreData(): Types? {
+        return try {
+            return apiService.getCoreData(headerMap)
+        }
+        catch(ex:Exception) {
+            null
+        }
     }
 
     @Throws(Exception::class)
@@ -52,7 +57,7 @@ class Api(val context: Context) {
         maxResults: Int,
         compact: Boolean,
         verbose: Boolean
-    ): List<PoiItem> {
+    ): List<PoiItem>? {
         val queryMap = hashMapOf<String, String>(
             "latitude" to lat.roundUp(5).toString(),
             "longitude" to lon.roundUp(5).toString(),
@@ -77,7 +82,12 @@ class Api(val context: Context) {
         connectionTypeIDs?.let {
             queryMap.put("connectiontypeid", it.commaSeperated())
         }
-        return apiService.getPOIs(headerMap, queryMap)
+        return try {
+            apiService.getPOIs(headerMap, queryMap)
+        }
+        catch(ex:Exception) {
+            null
+        }
     }
 
     // Round up lat, lon to minimal number of places for api call
