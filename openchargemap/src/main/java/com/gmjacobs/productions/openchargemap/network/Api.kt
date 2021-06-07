@@ -91,7 +91,7 @@ class Api(val context: Context) {
         catch(ex:java.lang.Exception) {
             Log.d(tag,"getPOIs exception ${ex.message}",ex)
             when(ex) {
-                is HttpException->APIResponse.HttpError(ex)
+                is HttpException->APIResponse.Exception(ex)
                 else -> APIResponse.Exception(ex)
             }
         }
