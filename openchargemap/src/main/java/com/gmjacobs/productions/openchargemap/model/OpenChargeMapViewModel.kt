@@ -5,6 +5,7 @@ import androidx.lifecycle.*
 import androidx.lifecycle.Observer
 import com.gmjacobs.productions.openchargemap.model.core.*
 import com.gmjacobs.productions.openchargemap.model.poi.PoiItem
+import com.gmjacobs.productions.openchargemap.network.APIResponse
 import com.gmjacobs.productions.openchargemap.network.Api
 import com.gmjacobs.productions.openchargemap.repo.OpenChargeMapRepository
 import kotlinx.coroutines.launch
@@ -25,7 +26,7 @@ class OpenChargeMapViewModel(application: Application, daysToExpireDB: Int) :
     var repo: OpenChargeMapRepository
     val dbIntialized = MutableLiveData<Boolean>()
     val paramsFetched = MediatorLiveData<Boolean>()
-    val pois = MutableLiveData<Optional<List<PoiItem>>>()
+    val pois = MutableLiveData<Optional<APIResponse>>()
     val chargeTypes = MutableLiveData<Optional<List<ChargerType>>>()
     val connectionTypes = MutableLiveData<Optional<List<ConnectionType>>>()
     val dataProviders = MutableLiveData<Optional<List<DataProvider>>>()

@@ -7,6 +7,7 @@ import com.gmjacobs.productions.openchargemap.model.core.Types
 import com.gmjacobs.productions.openchargemap.model.poi.PoiItem
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.math.RoundingMode
@@ -59,7 +60,7 @@ class Api(val context: Context) {
         maxResults: Int,
         compact: Boolean,
         verbose: Boolean
-    ): List<PoiItem>? {
+    ): APIResponse {
         val queryMap = hashMapOf<String, String>(
             "latitude" to lat.roundUp(5).toString(),
             "longitude" to lon.roundUp(5).toString(),
@@ -85,11 +86,14 @@ class Api(val context: Context) {
             queryMap.put("connectiontypeid", it.commaSeperated())
         }
         return try {
-            apiService.getPOIs(headerMap, queryMap)
+            APIResponse.Success((apiService.getPOIs(headerMap, queryMap)))
         }
         catch(ex:java.lang.Exception) {
             Log.d(tag,"getPOIs exception ${ex.message}",ex)
-            null
+            when(ex) {
+                is HttpException->APIResponse.HttpError(ex)
+                else -> APIResponse.Exception(ex)
+            }
         }
     }
 
