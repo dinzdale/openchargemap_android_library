@@ -13,7 +13,7 @@ import java.util.*
 
 class OpenChargeMapViewModelFactory(val application: Application, val daysToExpireDB: Int = 10) :
     ViewModelProvider.AndroidViewModelFactory(application) {
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T = modelClass.constructors.first {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T = modelClass.constructors.first {
         it.parameterTypes.size == 2 && it.parameterTypes[0].name.compareTo(Application::class.java.name) == 0 && it.parameterTypes[1].name.compareTo(
             "int"
         ) == 0

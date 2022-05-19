@@ -5,13 +5,12 @@ plugins {
 
 buildscript {
 
-    val kotlin_version by rootProject.extra { "1.3.31" }
+    val kotlin_version by rootProject.extra { "1.5.30" }
     val android_plugin_version by rootProject.extra { "3.6.0" }
 
 
     repositories {
         google()
-        jcenter()
     }
     dependencies {
         classpath("com.android.tools.build:gradle:$android_plugin_version")
