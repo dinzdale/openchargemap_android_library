@@ -5,7 +5,7 @@ plugins {
 
 buildscript {
 
-    val kotlin_version by rootProject.extra { "1.5.30" }
+    val kotlin_version by rootProject.extra { "1.6.21" }
     val android_plugin_version by rootProject.extra { "3.6.0" }
 
 
@@ -22,7 +22,7 @@ buildscript {
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 }
 
