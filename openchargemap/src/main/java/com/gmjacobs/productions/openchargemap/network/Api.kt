@@ -2,9 +2,11 @@ package com.gmjacobs.productions.openchargemap.network
 
 import android.content.Context
 import android.util.Log
+import com.gmjacobs.productions.openchargemap.BuildConfig
 import com.gmjacobs.productions.openchargemap.R
 import com.gmjacobs.productions.openchargemap.model.core.Types
 import com.gmjacobs.productions.openchargemap.model.poi.PoiItem
+import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.HttpException
@@ -21,7 +23,11 @@ class Api(val context: Context) {
     private val client: OkHttpClient by lazy {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.HEADERS
-        OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
+        val builder = OkHttpClient.Builder()
+        if (BuildConfig.DEBUG) {
+            builder.addInterceptor(loggingInterceptor).addInterceptor(OkHttpProfilerInterceptor())
+        }
+        builder.build()
     }
     private val retrofit: Retrofit = Retrofit.Builder().baseUrl(domain).client(client)
         .addConverterFactory(GsonConverterFactory.create()).build()
