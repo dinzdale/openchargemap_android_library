@@ -15,7 +15,7 @@ buildscript {
     dependencies {
         classpath("com.android.tools.build:gradle:$android_plugin_version")
         classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version")
-        classpath ("com.github.dcendents:android-maven-gradle-plugin:2.1")
+        //classpath ("com.github.dcendents:android-maven-gradle-plugin:2.1")
     }
 }
 
