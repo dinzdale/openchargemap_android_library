@@ -2,5 +2,7 @@
 <resources>
     <string name="api_key">4bfb6d9c-016b-487b-a1b6-08e478aba523</string>
     <string name="schema">https://api.openchargemap.io</string>
+    <string name="postion_stack_api_key">5f600c8689db1d0d86e8b408c47e3ade</string>
+    <string name="position_stack_base_url">http://api.positionstack.com/v1/</string>
 </resources>
 
