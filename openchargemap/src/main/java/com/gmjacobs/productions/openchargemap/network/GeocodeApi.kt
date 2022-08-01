@@ -3,6 +3,7 @@ package com.gmjacobs.productions.openchargemap.network
 import android.content.Context
 import android.util.Log
 import com.gmjacobs.productions.openchargemap.R
+import com.gmjacobs.productions.openchargemap.model.GeocodeViewModel
 import com.gmjacobs.productions.openchargemap.model.geocode.GeocodeResponse
 import com.itkacher.okprofiler.BuildConfig
 import com.localebro.okhttpprofiler.OkHttpProfilerInterceptor
@@ -12,6 +13,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.math.RoundingMode
 import java.text.DecimalFormat
+import kotlin.reflect.KProperty
 
 class GeocodeApi(val context: Context) {
 
@@ -61,5 +63,6 @@ class GeocodeApi(val context: Context) {
             Result.failure(ex)
         }
     }
+
 
 }

@@ -5,10 +5,10 @@ apply plugin: 'kotlin-kapt'
 group='com.github.dinzdale'
 
 ext {
-    lifecycle_version = "2.4.1"
-    kotlin_coroutines_version = "1.6.2"
+    lifecycle_version = "2.5.1"
+    kotlin_coroutines_version = "1.6.3"
     retrofit_version = "2.9.0"
-    room_version = "2.4.2"
+    room_version = "2.4.3"
 }
 
 android {
@@ -32,8 +32,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility  JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility  JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 
 //    kotlinOptions {
@@ -49,8 +49,8 @@ dependencies {
 
 
     //rest
-    api 'com.squareup.okhttp3:okhttp:4.9.0'
-    api 'com.squareup.okhttp3:logging-interceptor:4.9.0'
+    api 'com.squareup.okhttp3:okhttp:5.0.0-alpha.9'
+    api 'com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.9'
 
     // retrofit
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
@@ -65,10 +65,10 @@ dependencies {
     // Room DB
     implementation "androidx.room:room-runtime:$room_version"
     annotationProcessor "androidx.room:room-compiler:$room_version"
+    kapt "androidx.room:room-compiler:2.4.3"
     implementation "androidx.room:room-ktx:$room_version"
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
-    kapt "androidx.room:room-compiler:$room_version"
 
     // OKHttpInterceptor
     implementation("com.localebro:okhttpprofiler:1.0.8")
