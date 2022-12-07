@@ -81,16 +81,16 @@ dependencies {
 
 }
 
-afterEvaluate {
-    publishing {
-        publications {
-            release(MavenPublication) {
-                from components.release
-
-                groupId = 'com.github.dinzdale'
-                artifactId = 'openchargemap_android_library'
-                version = '1.1.6'
-            }
-        }
-    }
-}
+//afterEvaluate {
+//    publishing {
+//        publications {
+//            release(MavenPublication) {
+//                from components.release
+//
+//                groupId = 'com.github.dinzdale'
+//                artifactId = 'openchargemap_android_library'
+//                version = '1.1.6'
+//            }
+//        }
+//    }
+//}

@@ -14,8 +14,6 @@ class GeocodeApi(val context: Context) {
 
     private val tag = GeocodeApi::class.java.simpleName
 
-//    private val domain = context.getString(R.string.position_stack_base_url)
-//    private val api_key = context.getString(R.string.postion_stack_api_key)
     private val domain = context.getString(R.string.geocode_maps_base_url)
 
     private val client: OkHttpClient by lazy {
@@ -30,10 +28,7 @@ class GeocodeApi(val context: Context) {
     private val retrofit: Retrofit = Retrofit.Builder().baseUrl(domain).client(client)
         .addConverterFactory(GsonConverterFactory.create()).build()
     private val apiService: IGeocode = retrofit.create(IGeocode::class.java)
-//    private val headerMap = hashMapOf<String, String>(
-//        "User-Agent" to context.applicationInfo.packageName,
-//        "X-API-Key" to context.getString(R.string.api_key)
-//    )
+
 
     enum class DistanceUnit(val unitS: String) {
         MILES("Miles"),

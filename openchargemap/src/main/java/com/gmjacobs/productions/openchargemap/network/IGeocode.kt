@@ -8,7 +8,7 @@ interface IGeocode {
 //    @GET("v1/forward")
 //    suspend fun geocode(@QueryMap(encoded = true) queryMap:HashMap<String,String>) : ForwardGeocodeResponse
     @GET("search")
-    suspend fun geocodeForward(@QueryMap(encoded = true) queryMap:HashMap<String,String>) : List<GeocodeForwardResponseItem>
+    suspend fun geocodeForward(@QueryMap(encoded = false) queryMap:HashMap<String,String>) : List<GeocodeForwardResponseItem>
 //    @GET("/reverse")
 //    suspend fun reverseGeocode(@QueryMap(encoded = true) queryMap:HashMap<String,String>) : GeocodeResponse
 }
