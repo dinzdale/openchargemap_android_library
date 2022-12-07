@@ -15,7 +15,7 @@ class GeocodeViewModel(application: Application) : AndroidViewModel(application)
     private val repo = GeocodeApi(application)
 
     private val _forwardResponse = MutableLiveData<Result<List<GeocodeForwardResponseItem>>>()
-    val forwardResponse = flowOf(_forwardResponse)
+    val forwardResponse  : LiveData<Result<List<GeocodeForwardResponseItem>>> = _forwardResponse
 
     fun geocodeForward(query: String) {
         if (query.isNotEmpty()) {
